@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-600 min-h-screen flex flex-col items-center justify-center p-4">
+
+    {% block content %}
+    
+    {% endblock content %}
+
+
+    <script>
+function copyToClipboard() {
+    const copyInput = document.getElementById("shortUrlInput");
+    const copyBtn = document.getElementById("copyBtn");
+    const copyStatus = document.getElementById("copyStatus");
+
+    // Copy to clipboard using modern Web API
+    navigator.clipboard.writeText(copyInput.value).then(() => {
+        // Update button text and style temporarily
+        copyBtn.textContent = "Copied!";
+        copyBtn.classList.remove("bg-blue-600", "hover:bg-blue-700");
+        copyBtn.classList.add("bg-green-600", "hover:bg-green-700");
+        
+        // Show status text
+        copyStatus.classList.remove("hidden");
+
+        // Revert back after 2.5 seconds
+        setTimeout(() => {
+            copyBtn.textContent = "Copy";
+            copyBtn.classList.remove("bg-green-600", "hover:bg-green-700");
+            copyBtn.classList.add("bg-blue-600", "hover:bg-blue-700");
+            copyStatus.classList.add("hidden");
+        }, 2500);
+    }).catch(err => {
+        console.error("Failed to copy URL: ", err);
+    });
+}
+</script>
+  </body>
+</html>
